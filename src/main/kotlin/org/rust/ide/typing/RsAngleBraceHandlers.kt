@@ -28,8 +28,8 @@ class RsAngleBraceTypedHandler : TypedHandlerDelegate() {
             when (c) {
                 '<' -> rsLTTyped = isStartOfGenericBraces(editor)
                 '>' -> {
-                    val charAtCaret = editor.document.charsSequence.getOrNull(editor.caretModel.offset)
-                    if (charAtCaret == '>' && calculateBalance(editor) == 0) {
+                    val tokenType = (editor as EditorEx).highlighter.createIterator(editor.caretModel.offset).tokenType
+                    if (tokenType == GT && calculateBalance(editor) == 0) {
                         EditorModificationUtil.moveCaretRelatively(editor, 1)
                         return Result.STOP
                     }
